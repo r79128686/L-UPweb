@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <!-- スムーズスクロール有効＆アンカーずれ対策 -->
+  <style>
+    html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>L‑UP | Company Profile</title>
+  <!-- Google Fonts の読み込み -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Bebas Neue（会社名用フォント） -->
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+  <!-- Archivo Black -->
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap" rel="stylesheet">
+  <!-- Caveat (手書き風) -->
+  <link href="https://fonts.googleapis.com/css2?family=Caveat&display=swap" rel="stylesheet">
+  <!-- Montserrat -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    /* 基本設定 */
+    * { box-sizing: border-box; }
+    body, html {
+      margin: 0;
+      padding: 0;
+      font-family: 'Montserrat', sans-serif;
+      background: #f9f9f9;
+      color: #333;
+    }
+    a { text-decoration: none; color: inherit; }
+
+    /* ローディング画面 */
+    #loader {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: #000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      transition: opacity 0.5s ease;
+    }
+    .loading-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .logo-text {
+      color: #fff;
+      font-size: 80px;
+      font-family: 'Archivo Black', sans-serif;
+      text-align: center;
+    }
+    .subtext {
+      margin-top: 10px;
+      color: #fff;
+      font-size: 1.5rem;
+      font-family: 'Caveat', cursive;
+      text-align: center;
+      letter-spacing: 3px;
+    }
+    .loading-blocks {
+      display: flex;
+      gap: 10px;
+    }
+    .block {
+      width: 20px;
+      height: 20px;
+      background: #fff;
+      opacity: 0.3;
+      animation: blink 1.5s infinite;
+    }
+    .block:nth-child(1) { animation-delay: 0s; }
+    .block:nth-child(2) { animation-delay: 0.3s; }
+    .block:nth-child(3) { animation-delay: 0.6s; }
+    .block:nth-child(4) { animation-delay: 0.9s; }
+    .block:nth-child(5) { animation-delay: 1.2s; }
+    @keyframes blink {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 1; }
+    }
+
+    /* メインコンテンツ */
+    #content {
+      opacity: 0;
+      transition: opacity 1s ease;
+    }
+
+    /* ヘッダー（固定、背景半透明、常にヒーローに重なる） */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 80px;
+      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+    }
+    nav ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: inline-flex;
+      gap: 30px;
+      align-items: center;
+    }
+    nav ul li { font-size: 16px; color: #fff; }
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .logo-text-nav {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 40px;
+      color: #fff;
+    }
+    .nav-eng {
+      font-weight: 700;
+      font-size: 14px;
+      color: #fff;
+    }
+    .nav-divider {
+      width: 100%;
+      border: none;
+      border-top: 1px solid #999;
+      margin: 2px 0;
+    }
+    .nav-jp {
+      font-size: 16px;
+      color: #fff;
+    }
+    nav ul li a {
+      color: #fff;
+    }
+
+    /* ハンバーガーメニュー（モバイル用） */
+    .menu-toggle {
+      display: none;
+      cursor: pointer;
+      color: #fff;
+      font-size: 30px;
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      z-index: 1001;
+    }
+
+    /* ヒーローセクション */
+    .hero {
+      background: url('hero-bg.jpg') no-repeat center center;
+      background-size: cover;
+      height: 800px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.3);
+      z-index: 1;
+    }
+    .hero h2 {
+      position: relative;
+      color: #fff;
+      font-size: 48px;
+      font-family: 'Caveat', cursive;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+      margin: 0;
+      text-align: center;
+      z-index: 2;
+    }
+
+    /* コンテンツセクション（背景画像領域は420px） */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+    .section {
+      opacity: 0;
+      transform: translateY(50px);
+      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+      margin-bottom: 60px;
+      text-align: center;
+      min-height: 420px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .section .content {
+      padding: 40px;
+      background: rgba(0, 0, 0, 0.5);
+      width: 800px;
+      height: 300px;
+      margin: 0 auto;
+      color: #fff;
+    }
+    .section .content .title {
+      font-size: 32px;
+      margin-bottom: 10px;
+    }
+    .section .content .subtitle {
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+    .section .content p {
+      font-size: 16px;
+    }
+
+    /* NEWS セクション（下からフェードイン、横に細長いブロック） */
+    .news-section {
+      opacity: 0;
+      transform: translateY(50px);
+      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+      margin-bottom: 60px;
+      text-align: left;
+      min-height: 150px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .news-section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .news-section .content {
+      padding: 20px 40px;
+      background: #fff;
+      color: #333;
+      font-size: 18px;
+      letter-spacing: 1px;
+      text-align: left;
+      width: 100%;
+    }
+
+    /* フッター */
+    footer {
+      background: #333;
+      color: #fff;
+      text-align: center;
+      padding: 20px;
+      font-size: 14px;
+    }
+    
+    /* 画像ギャラリー */
+    .gallery {
+      overflow: hidden;
+      background: #222;
+      padding: 20px 0;
+    }
+    .gallery-track {
+      display: flex;
+      animation: scroll 30s linear infinite;
+    }
+    .gallery img {
+      width: 300px;
+      height: auto;
+      margin-right: 20px;
+    }
+    @keyframes scroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* メディアクエリ（画面幅768px以下） */
+    @media (max-width: 768px) {
+      header { flex-direction: row; justify-content: space-between; }
+      .menu-toggle { display: block; }
+      nav ul {
+        flex-direction: column;
+        background: rgba(0, 0, 0, 0.9);
+        position: absolute;
+        top: 60px;
+        left: 0;
+        width: 100%;
+        display: none;
+      }
+      nav ul.show { display: flex; }
+      nav ul li { font-size: 14px; }
+      .hero { height: 500px; }
+      .hero h2 { font-size: 32px; }
+      .container { padding: 20px 10px; }
+      .section .content {
+        width: 100%;
+        padding: 20px;
+        height: auto;
+      }
+      .news-section .content { padding: 10px 20px; font-size: 14px; }
+      .gallery img { width: 200px; margin-right: 10px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- ローディング画面 -->
+  <div id="loader">
+    <div class="loading-header">
+      <div class="logo-text">L‑UP</div>
+      <div class="subtext">Are you ready to rise ?</div>
+    </div>
+    <div class="loading-blocks">
+      <div class="block"></div>
+      <div class="block"></div>
+      <div class="block"></div>
+      <div class="block"></div>
+      <div class="block"></div>
+    </div>
+  </div>
+
+  <!-- メインコンテンツ -->
+  <div id="content">
+    <!-- ヘッダー -->
+    <header>
+      <div class="menu-toggle">☰</div>
+      <nav>
+        <ul>
+          <!-- 会社名（ナビ最初の項目、クリックでホームへ戻る） -->
+          <li>
+            <div class="nav-item">
+              <a href="#home">
+                <span class="logo-text-nav">L‑UP</span>
+              </a>
+            </div>
+          </li>
+          <li>
+            <div class="nav-item">
+              <a href="#news">
+                <span class="nav-eng">NEWS</span>
+                <hr class="nav-divider">
+                <span class="nav-jp">お知らせ</span>
+              </a>
+            </div>
+          </li>
+          <li>
+            <div class="nav-item">
+              <a href="#message">
+                <span class="nav-eng">MESSAGE</span>
+                <hr class="nav-divider">
+                <span class="nav-jp">メッセージ</span>
+              </a>
+            </div>
+          </li>
+          <li>
+            <div class="nav-item">
+              <a href="#company">
+                <span class="nav-eng">COMPANY</span>
+                <hr class="nav-divider">
+                <span class="nav-jp">会社概要</span>
+              </a>
+            </div>
+          </li>
+          <li>
+            <div class="nav-item">
+              <a href="#services">
+                <span class="nav-eng">SERVICES</span>
+                <hr class="nav-divider">
+                <span class="nav-jp">事業内容</span>
+              </a>
+            </div>
+          </li>
+          <li>
+            <div class="nav-item">
+              <a href="#recruit">
+                <span class="nav-eng">RECRUIT</span>
+                <hr class="nav-divider">
+                <span class="nav-jp">採用情報</span>
+              </a>
+            </div>
+          </li>
+          <li>
+            <div class="nav-item">
+              <a href="#contact">
+                <span class="nav-eng">CONTACT</span>
+                <hr class="nav-divider">
+                <span class="nav-jp">お問い合わせ</span>
+              </a>
+            </div>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- ヒーローセクション -->
+    <section class="hero" id="home">
+      <h2>Are you ready to rise ?</h2>
+    </section>
+
+    <!-- NEWS セクション -->
+    <div class="container">
+      <section class="news-section" id="news">
+        <div class="content">
+          <h3>お知らせ</h3>
+          <ul>
+            <li><strong>2025/03/19</strong> 新しいサービスを開始しました。</li>
+            <li><strong>2025/03/15</strong> 会社ロゴがリニューアルされました。</li>
+            <li><strong>2025/03/10</strong> ウェブサイトがリニューアルされました。</li>
+          </ul>
+        </div>
+      </section>
+    </div>
+
+    <!-- MESSAGE セクション -->
+    <div class="container">
+      <section class="section" id="message" style="background-image: url('message-bg.jpg'); background-size: cover;">
+        <div class="content">
+          <div class="title">MESSAGE</div>
+          <hr>
+          <div class="subtitle">代表メッセージ<br>L‑UPの描く未来</div>
+          <p>企業理念、想いをインタビュー。</p>
+        </div>
+      </section>
+    </div>
+
+    <!-- COMPANY セクション -->
+    <div class="container">
+      <section class="section" id="company" style="background-image: url('company-bg.jpg'); background-size: cover;">
+        <div class="content">
+          <div class="title">COMPANY</div>
+          <hr>
+          <div class="subtitle">会社概要</div>
+          <p>L‑UPは、革新的なソリューションと卓越したサービスを提供する企業です。</p>
+        </div>
+      </section>
+    </div>
+
+    <!-- SERVICES セクション -->
+    <div class="container">
+      <section class="section" id="services" style="background-image: url('services-bg.jpg'); background-size: cover;">
+        <div class="content">
+          <div class="title">SERVICES</div>
+          <hr>
+          <div class="subtitle">事業内容</div>
+          <p>弊社は多岐にわたる事業を展開し、クライアントの多様なニーズに応えます。</p>
+        </div>
+      </section>
+    </div>
+
+    <!-- RECRUIT セクション -->
+    <div class="container">
+      <section class="section" id="recruit" style="background-image: url('recruit-bg.jpg'); background-size: cover;">
+        <div class="content">
+          <div class="title">RECRUIT</div>
+          <hr>
+          <div class="subtitle">採用情報</div>
+          <p>採用に関する情報はこちらからご確認ください。</p>
+        </div>
+      </section>
+    </div>
+
+    <!-- CONTACT セクション -->
+    <div class="container">
+      <section class="section" id="contact" style="background-image: url('contact-bg.jpg'); background-size: cover;">
+        <div class="content">
+          <div class="title">CONTACT</div>
+          <hr>
+          <div class="subtitle">お問い合わせ</div>
+          <p>ご質問・ご相談はお気軽にお問い合わせください。</p>
+        </div>
+      </section>
+    </div>
+
+    <!-- 画像ギャラリー -->
+    <div class="gallery">
+      <div class="gallery-track">
+        <img src="gallery1.jpg" alt="Gallery 1">
+        <img src="gallery2.jpg" alt="Gallery 2">
+        <img src="gallery3.jpg" alt="Gallery 3">
+        <img src="gallery4.jpg" alt="Gallery 4">
+        <img src="gallery5.jpg" alt="Gallery 5">
+        <img src="gallery6.jpg" alt="Gallery 6">
+        <img src="gallery7.jpg" alt="Gallery 7">
+        <img src="gallery8.jpg" alt="Gallery 8">
+        <img src="gallery9.jpg" alt="Gallery 9">
+        <img src="gallery10.jpg" alt="Gallery 10">
+      </div>
+    </div>
+
+    <!-- フッター -->
+    <footer>
+      <p>&copy; 2025 L‑UP. All Rights Reserved.</p>
+    </footer>
+  </div>
+
+  <script>
+    // ローディング画面の処理
+    window.addEventListener('load', () => {
+      const loader = document.getElementById('loader');
+      const content = document.getElementById('content');
+      setTimeout(() => {
+        loader.style.opacity = '0';
+        setTimeout(() => {
+          loader.style.display = 'none';
+          content.style.opacity = '1';
+        }, 500);
+      }, 1500);
+    });
+
+    // ハンバーガーメニュー（モバイル用）
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navMenu = document.querySelector('nav ul');
+    if (menuToggle) {
+      menuToggle.addEventListener('click', () => {
+        navMenu.classList.toggle('show');
+      });
+    }
+
+    // IntersectionObserver で各セクションのスライドインを実装
+    document.addEventListener('DOMContentLoaded', () => {
+      const sections = document.querySelectorAll('.section, .news-section');
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      }, { threshold: 0.3 });
+      sections.forEach(section => observer.observe(section));
+    });
+  </script>
+</body>
+</html>
