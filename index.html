@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <!-- スムーズスクロール有効＆アンカーずれ対策 -->
+  <!-- スムーズスクロール＆アンカーずれ対策 -->
   <style>
     html {
       scroll-behavior: smooth;
@@ -25,9 +25,7 @@
 
   <style>
     /* 基本設定 */
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
     body, html {
       margin: 0;
       padding: 0;
@@ -35,9 +33,12 @@
       background: #f9f9f9;
       color: #333;
     }
-    a {
-      text-decoration: none;
-      color: inherit;
+    a { text-decoration: none; color: inherit; }
+
+    /* 画像が歪まないように */
+    img {
+      max-width: 100%;
+      height: auto;
     }
 
     /* ローディング画面 */
@@ -100,7 +101,7 @@
       transition: opacity 1s ease;
     }
 
-    /* ヘッダー */
+    /* ヘッダー（PC版は中央寄せ） */
     header {
       position: fixed;
       top: 0;
@@ -108,30 +109,34 @@
       width: 100%;
       height: 80px;
       background: rgba(0, 0, 0, 0.5);
-      display: flex;
-      align-items: center;
-      justify-content: space-between; /* 左にハンバーガー、中央にロゴ、右に空きスペース */
-      padding: 0 20px;
       z-index: 999;
+      display: flex;
+      flex-direction: column; /* PCでロゴとナビを縦並びに */
+      align-items: center;
+      justify-content: center;
+      padding: 0 20px;
     }
-    /* ヘッダー中央のロゴ */
-    .header-logo {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 40px;
-      color: #fff;
-      margin: 0 auto;
-      text-align: center;
-    }
-
-    /* ハンバーガーメニュー */
+    /* ハンバーガーメニュー（モバイル用） */
     .menu-toggle {
       display: none;
       cursor: pointer;
       color: #fff;
       font-size: 30px;
     }
-
-    /* ナビゲーション */
+    /* PC版ヘッダー内のロゴとナビを横並び中央寄せ */
+    .header-pc {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+    }
+    .header-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 40px;
+      color: #fff;
+      text-align: center;
+      margin-right: 50px; /* ロゴとナビの間隔 */
+    }
     nav ul {
       list-style: none;
       margin: 0;
@@ -168,7 +173,7 @@
       color: #fff;
     }
 
-    /* ヒーローセクション */
+    /* ヒーローセクション（PC版は中央寄せ） */
     .hero {
       background: url('hero-bg.jpg') no-repeat center center;
       background-size: cover;
@@ -184,7 +189,7 @@
       top: 0; left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0,0,0,0.3); /* 背景画像を少し暗く */
+      background: rgba(0,0,0,0.3);
       z-index: 1;
     }
     .hero h2 {
@@ -196,21 +201,23 @@
       margin: 0;
       text-align: center;
       z-index: 2;
+      white-space: nowrap;
     }
 
-    /* コンテンツセクション */
+    /* コンテナやセクションの余白調整 */
     .container {
       max-width: 1200px;
       margin: 0 auto;
-      padding: 40px 20px;
+      padding: 0; /* 余白をなくす */
     }
     .section {
+      /* 縦に長くするために min-height を大きめに */
+      min-height: 800px;
       opacity: 0;
       transform: translateY(50px);
       transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-      margin-bottom: 60px;
+      margin-bottom: 0;
       text-align: center;
-      min-height: 420px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -220,11 +227,10 @@
       transform: translateY(0);
     }
     .section .content {
-      padding: 40px;
+      padding: 20px;
       background: rgba(0, 0, 0, 0.5);
-      width: 800px;
-      height: 300px;
-      margin: 0 auto;
+      width: 100%;
+      height: 100%;
       color: #fff;
     }
     .section .content .title {
@@ -244,7 +250,7 @@
       opacity: 0;
       transform: translateY(50px);
       transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-      margin-bottom: 60px;
+      margin-bottom: 0;
       text-align: left;
       min-height: 150px;
       display: flex;
@@ -256,7 +262,7 @@
       transform: translateY(0);
     }
     .news-section .content {
-      padding: 20px 40px;
+      padding: 10px 20px;
       background: #fff;
       color: #333;
       font-size: 18px;
@@ -273,7 +279,7 @@
       padding: 20px;
       font-size: 14px;
     }
-    
+
     /* 画像ギャラリー */
     .gallery {
       overflow: hidden;
@@ -282,10 +288,12 @@
     }
     .gallery-track {
       display: flex;
-      animation: scroll 30s linear infinite;
+      /* スクロール速度を上げるために 30s → 15s に変更 */
+      animation: scroll 15s linear infinite;
     }
+    /* 画像が歪まないように width: 300px; から修正 */
     .gallery img {
-      width: 300px;
+      max-width: 300px;
       height: auto;
       margin-right: 20px;
     }
@@ -294,19 +302,24 @@
       100% { transform: translateX(-50%); }
     }
 
-    /* メディアクエリ（768px以下） */
+    /* モバイル用（768px以下） - 既存スタイルはそのまま */
     @media (max-width: 768px) {
       header {
         justify-content: flex-start;
+        padding: 0 10px;
       }
       .menu-toggle {
         display: block;
         cursor: pointer;
         color: #fff;
         font-size: 30px;
-        margin-right: auto; /* 左側に配置 */
+        margin-right: auto;
       }
-      /* ヘッダー中央にロゴを表示 */
+      /* PC向けのロゴ＋ナビを隠すか、あるいは位置を変えたい場合はここで調整 */
+      .header-pc {
+        display: none; /* モバイルでは非表示 */
+      }
+      /* モバイル版でロゴを表示する */
       .header-logo {
         position: absolute;
         left: 50%;
@@ -329,9 +342,24 @@
       nav ul.show {
         display: flex;
       }
-      nav ul li { font-size: 14px; margin: 10px 0; }
+      nav ul li {
+        font-size: 14px;
+        margin: 10px 0;
+      }
+      .hero {
+        background: url('hero-bg.jpg') no-repeat left center;
+        background-size: cover;
+        height: 500px;
+      }
+      .hero h2 {
+        font-size: 32px;
+        white-space: nowrap;
+      }
+      .container {
+        padding: 20px 10px;
+      }
       .section .content {
-        width: 90%;
+        width: 100%;
         height: auto;
         padding: 20px;
       }
@@ -340,7 +368,7 @@
         font-size: 14px;
       }
       .gallery img {
-        width: 200px;
+        max-width: 200px; /* モバイルでは少し小さめに */
         margin-right: 10px;
       }
     }
@@ -364,71 +392,73 @@
 
   <!-- メインコンテンツ -->
   <div id="content">
-    <!-- ヘッダー -->
+    <!-- ヘッダー（PC版は中央寄せ、モバイルはハンバーガー） -->
     <header>
-      <!-- ハンバーガーメニュー -->
+      <!-- モバイル版ハンバーガーメニュー -->
       <div class="menu-toggle">☰</div>
-      <!-- ヘッダー中央のロゴ -->
-      <h1 class="header-logo">L‑UP</h1>
 
-      <nav>
-        <ul>
-          <li>
-            <div class="nav-item">
-              <a href="#news">
-                <span class="nav-eng">NEWS</span>
-                <hr class="nav-divider">
-                <span class="nav-jp">お知らせ</span>
-              </a>
-            </div>
-          </li>
-          <li>
-            <div class="nav-item">
-              <a href="#message">
-                <span class="nav-eng">MESSAGE</span>
-                <hr class="nav-divider">
-                <span class="nav-jp">メッセージ</span>
-              </a>
-            </div>
-          </li>
-          <li>
-            <div class="nav-item">
-              <a href="#company">
-                <span class="nav-eng">COMPANY</span>
-                <hr class="nav-divider">
-                <span class="nav-jp">会社概要</span>
-              </a>
-            </div>
-          </li>
-          <li>
-            <div class="nav-item">
-              <a href="#services">
-                <span class="nav-eng">SERVICES</span>
-                <hr class="nav-divider">
-                <span class="nav-jp">事業内容</span>
-              </a>
-            </div>
-          </li>
-          <li>
-            <div class="nav-item">
-              <a href="#recruit">
-                <span class="nav-eng">RECRUIT</span>
-                <hr class="nav-divider">
-                <span class="nav-jp">採用情報</span>
-              </a>
-            </div>
-          </li>
-          <li>
-            <div class="nav-item">
-              <a href="#contact">
-                <span class="nav-eng">CONTACT</span>
-                <hr class="nav-divider">
-                <span class="nav-jp">お問い合わせ</span>
-              </a>
-            </div>
-          </li>
-        </ul>
-      </nav>
+      <!-- PC版ロゴ＋ナビを横並び中央寄せ -->
+      <div class="header-pc">
+        <h1 class="header-logo"><a href="#home" style="color:#fff;">L‑UP</a></h1>
+        <nav>
+          <ul>
+            <li>
+              <div class="nav-item">
+                <a href="#news">
+                  <span class="nav-eng">NEWS</span>
+                  <hr class="nav-divider">
+                  <span class="nav-jp">お知らせ</span>
+                </a>
+              </div>
+            </li>
+            <li>
+              <div class="nav-item">
+                <a href="#message">
+                  <span class="nav-eng">MESSAGE</span>
+                  <hr class="nav-divider">
+                  <span class="nav-jp">メッセージ</span>
+                </a>
+              </div>
+            </li>
+            <li>
+              <div class="nav-item">
+                <a href="#company">
+                  <span class="nav-eng">COMPANY</span>
+                  <hr class="nav-divider">
+                  <span class="nav-jp">会社概要</span>
+                </a>
+              </div>
+            </li>
+            <li>
+              <div class="nav-item">
+                <a href="#services">
+                  <span class="nav-eng">SERVICES</span>
+                  <hr class="nav-divider">
+                  <span class="nav-jp">事業内容</span>
+                </a>
+              </div>
+            </li>
+            <li>
+              <div class="nav-item">
+                <a href="#recruit">
+                  <span class="nav-eng">RECRUIT</span>
+                  <hr class="nav-divider">
+                  <span class="nav-jp">採用情報</span>
+                </a>
+              </div>
+            </li>
+            <li>
+              <div class="nav-item">
+                <a href="#contact">
+                  <span class="nav-eng">CONTACT</span>
+                  <hr class="nav-divider">
+                  <span class="nav-jp">お問い合わせ</span>
+                </a>
+              </div>
+            </li>
+          </ul>
+        </nav>
+      </div>
     </header>
 
     <!-- ヒーローセクション -->
@@ -452,7 +482,7 @@
 
     <!-- MESSAGE セクション -->
     <div class="container">
-      <section class="section" id="message" style="background-image: url('message-bg.jpg'); background-size: cover;">
+      <section class="section" id="message" style="background-image: url('message-bg.jpg'); background-size: cover; background-position: center;">
         <div class="content">
           <div class="title">MESSAGE</div>
           <hr>
@@ -464,7 +494,7 @@
 
     <!-- COMPANY セクション -->
     <div class="container">
-      <section class="section" id="company" style="background-image: url('company-bg.jpg'); background-size: cover;">
+      <section class="section" id="company" style="background-image: url('company-bg.jpg'); background-size: cover; background-position: center;">
         <div class="content">
           <div class="title">COMPANY</div>
           <hr>
@@ -476,7 +506,7 @@
 
     <!-- SERVICES セクション -->
     <div class="container">
-      <section class="section" id="services" style="background-image: url('services-bg.jpg'); background-size: cover;">
+      <section class="section" id="services" style="background-image: url('services-bg.jpg'); background-size: cover; background-position: center;">
         <div class="content">
           <div class="title">SERVICES</div>
           <hr>
@@ -488,7 +518,7 @@
 
     <!-- RECRUIT セクション -->
     <div class="container">
-      <section class="section" id="recruit" style="background-image: url('recruit-bg.jpg'); background-size: cover;">
+      <section class="section" id="recruit" style="background-image: url('recruit-bg.jpg'); background-size: cover; background-position: center;">
         <div class="content">
           <div class="title">RECRUIT</div>
           <hr>
@@ -500,7 +530,7 @@
 
     <!-- CONTACT セクション -->
     <div class="container">
-      <section class="section" id="contact" style="background-image: url('contact-bg.jpg'); background-size: cover;">
+      <section class="section" id="contact" style="background-image: url('contact-bg.jpg'); background-size: cover; background-position: center;">
         <div class="content">
           <div class="title">CONTACT</div>
           <hr>
@@ -549,13 +579,11 @@
     // ハンバーガーメニュー（モバイル用）
     const menuToggle = document.querySelector('.menu-toggle');
     const navMenu = document.querySelector('nav ul');
-
     if (menuToggle) {
       menuToggle.addEventListener('click', () => {
         navMenu.classList.toggle('show');
       });
     }
-
     // メニューリンクをクリックしたらメニューを閉じる
     document.querySelectorAll('nav ul li a').forEach(link => {
       link.addEventListener('click', () => {
