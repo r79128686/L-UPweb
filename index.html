@@ -4,7 +4,10 @@
   <meta charset="UTF-8">
   <!-- スムーズスクロール有効＆アンカーずれ対策 -->
   <style>
-    html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 80px; /* ヘッダーの高さに合わせる */
+    }
   </style>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>L‑UP | Company Profile</title>
@@ -19,9 +22,12 @@
   <link href="https://fonts.googleapis.com/css2?family=Caveat&display=swap" rel="stylesheet">
   <!-- Montserrat -->
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+
   <style>
     /* 基本設定 */
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
     body, html {
       margin: 0;
       padding: 0;
@@ -29,7 +35,10 @@
       background: #f9f9f9;
       color: #333;
     }
-    a { text-decoration: none; color: inherit; }
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
 
     /* ローディング画面 */
     #loader {
@@ -91,7 +100,7 @@
       transition: opacity 1s ease;
     }
 
-    /* ヘッダー（固定、背景半透明、常にヒーローに重なる） */
+    /* ヘッダー */
     header {
       position: fixed;
       top: 0;
@@ -101,9 +110,28 @@
       background: rgba(0, 0, 0, 0.5);
       display: flex;
       align-items: center;
-      justify-content: center;
+      justify-content: space-between; /* 左にハンバーガー、中央にロゴ、右に空きスペース */
+      padding: 0 20px;
       z-index: 999;
     }
+    /* ヘッダー中央のロゴ */
+    .header-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 40px;
+      color: #fff;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    /* ハンバーガーメニュー */
+    .menu-toggle {
+      display: none;
+      cursor: pointer;
+      color: #fff;
+      font-size: 30px;
+    }
+
+    /* ナビゲーション */
     nav ul {
       list-style: none;
       margin: 0;
@@ -112,16 +140,14 @@
       gap: 30px;
       align-items: center;
     }
-    nav ul li { font-size: 16px; color: #fff; }
+    nav ul li {
+      font-size: 16px;
+      color: #fff;
+    }
     .nav-item {
       display: flex;
       flex-direction: column;
       align-items: center;
-    }
-    .logo-text-nav {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 40px;
-      color: #fff;
     }
     .nav-eng {
       font-weight: 700;
@@ -142,27 +168,15 @@
       color: #fff;
     }
 
-    /* ハンバーガーメニュー（モバイル用） */
-    .menu-toggle {
-      display: none;
-      cursor: pointer;
-      color: #fff;
-      font-size: 30px;
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      z-index: 1001;
-    }
-
     /* ヒーローセクション */
     .hero {
       background: url('hero-bg.jpg') no-repeat center center;
       background-size: cover;
       height: 800px;
+      position: relative;
       display: flex;
       align-items: center;
       justify-content: center;
-      position: relative;
     }
     .hero::after {
       content: "";
@@ -170,7 +184,7 @@
       top: 0; left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.3);
+      background: rgba(0,0,0,0.3); /* 背景画像を少し暗く */
       z-index: 1;
     }
     .hero h2 {
@@ -184,7 +198,7 @@
       z-index: 2;
     }
 
-    /* コンテンツセクション（背景画像領域は420px） */
+    /* コンテンツセクション */
     .container {
       max-width: 1200px;
       margin: 0 auto;
@@ -225,7 +239,7 @@
       font-size: 16px;
     }
 
-    /* NEWS セクション（下からフェードイン、横に細長いブロック） */
+    /* NEWS セクション */
     .news-section {
       opacity: 0;
       transform: translateY(50px);
@@ -280,31 +294,55 @@
       100% { transform: translateX(-50%); }
     }
 
-    /* メディアクエリ（画面幅768px以下） */
+    /* メディアクエリ（768px以下） */
     @media (max-width: 768px) {
-      header { flex-direction: row; justify-content: space-between; }
-      .menu-toggle { display: block; }
+      header {
+        justify-content: flex-start;
+      }
+      .menu-toggle {
+        display: block;
+        cursor: pointer;
+        color: #fff;
+        font-size: 30px;
+        margin-right: auto; /* 左側に配置 */
+      }
+      /* ヘッダー中央にロゴを表示 */
+      .header-logo {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        font-family: 'Bebas Neue', sans-serif;
+        font-size: 30px;
+        color: #fff;
+      }
+
       nav ul {
         flex-direction: column;
         background: rgba(0, 0, 0, 0.9);
         position: absolute;
-        top: 60px;
+        top: 80px;
         left: 0;
         width: 100%;
         display: none;
+        padding: 20px 0;
       }
-      nav ul.show { display: flex; }
-      nav ul li { font-size: 14px; }
-      .hero { height: 500px; }
-      .hero h2 { font-size: 32px; }
-      .container { padding: 20px 10px; }
+      nav ul.show {
+        display: flex;
+      }
+      nav ul li { font-size: 14px; margin: 10px 0; }
       .section .content {
-        width: 100%;
-        padding: 20px;
+        width: 90%;
         height: auto;
+        padding: 20px;
       }
-      .news-section .content { padding: 10px 20px; font-size: 14px; }
-      .gallery img { width: 200px; margin-right: 10px; }
+      .news-section .content {
+        padding: 10px 20px;
+        font-size: 14px;
+      }
+      .gallery img {
+        width: 200px;
+        margin-right: 10px;
+      }
     }
   </style>
 </head>
@@ -328,17 +366,13 @@
   <div id="content">
     <!-- ヘッダー -->
     <header>
+      <!-- ハンバーガーメニュー -->
       <div class="menu-toggle">☰</div>
+      <!-- ヘッダー中央のロゴ -->
+      <h1 class="header-logo">L‑UP</h1>
+
       <nav>
         <ul>
-          <!-- 会社名（ナビ最初の項目、クリックでホームへ戻る） -->
-          <li>
-            <div class="nav-item">
-              <a href="#home">
-                <span class="logo-text-nav">L‑UP</span>
-              </a>
-            </div>
-          </li>
           <li>
             <div class="nav-item">
               <a href="#news">
@@ -515,11 +549,19 @@
     // ハンバーガーメニュー（モバイル用）
     const menuToggle = document.querySelector('.menu-toggle');
     const navMenu = document.querySelector('nav ul');
+
     if (menuToggle) {
       menuToggle.addEventListener('click', () => {
         navMenu.classList.toggle('show');
       });
     }
+
+    // メニューリンクをクリックしたらメニューを閉じる
+    document.querySelectorAll('nav ul li a').forEach(link => {
+      link.addEventListener('click', () => {
+        navMenu.classList.remove('show');
+      });
+    });
 
     // IntersectionObserver で各セクションのスライドインを実装
     document.addEventListener('DOMContentLoaded', () => {
