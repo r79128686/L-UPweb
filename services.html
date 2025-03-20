@@ -226,14 +226,19 @@
       margin-bottom: 30px;
     }
     .btn-list a {
-      display: inline-block;
-      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 180px;
+      height: 80px;
       background: #eee;
       color: #333;
       border-radius: 4px;
       font-weight: bold;
       text-align: center;
       transition: background 0.3s;
+      margin-top: 80px;
+      padding: 0;
     }
     .btn-list a:hover {
       background: #ccc;
@@ -267,12 +272,12 @@
       }
       .menu-toggle {
         display: block;
-        font-size: 36px;
+        font-size: 40px;
         margin-right: auto;
       }
       .header-pc { display: none; }
       .header-logo {
-        position: relative;
+        position: absolute;
         left: 50%;
         transform: translateX(-50%);
         font-size: 30px;
@@ -286,6 +291,7 @@
         width: 100%;
         display: none;
         padding: 20px 0;
+        z-index: 998;
       }
       nav ul.show { display: flex; }
       nav ul li {
@@ -345,7 +351,9 @@
     const navMenu = document.querySelector('nav ul');
     if (menuToggle) {
       menuToggle.addEventListener('click', () => {
-        navMenu.classList.toggle('show');
+        if (window.innerWidth <= 768) {
+          navMenu.classList.toggle('show');
+        }
       });
     }
     document.querySelectorAll('nav ul li a').forEach(link => {
@@ -501,11 +509,11 @@
     
     <!-- 下部のボタンエリア（リンク） -->
     <div class="btn-list">
+      <a href="index.html?noload=true#news">NEWS<br>お知らせ</a>
       <a href="company.html?noload=true">COMPANY<br>会社概要</a>
       <a href="message.html?noload=true">MESSAGE<br>メッセージ</a>
-      <a href="services.html?noload=true">SERVICES<br>事業内容</a>
+      <a href="services.html?noload=true">SERVICES<br>事業紹介</a>
       <a href="recruit.html?noload=true">RECRUIT<br>採用情報</a>
-      <a href="index.html?noload=true#news">NEWS<br>お知らせ</a>
       <a href="contact.html?noload=true">CONTACT<br>お問い合わせ</a>
     </div>
     
@@ -548,7 +556,9 @@
     const navMenu = document.querySelector('nav ul');
     if (menuToggle) {
       menuToggle.addEventListener('click', () => {
-        navMenu.classList.toggle('show');
+        if (window.innerWidth <= 768) {
+          navMenu.classList.toggle('show');
+        }
       });
     }
     document.querySelectorAll('nav ul li a').forEach(link => {

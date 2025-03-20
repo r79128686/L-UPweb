@@ -219,7 +219,7 @@
       }
       .menu-toggle {
         display: block;
-        font-size: 30px;
+        font-size: 48px;
         margin-right: auto;
       }
       .header-pc { display: none; }
@@ -263,6 +263,31 @@
         padding: 8px;
       }
     }
+    .btn-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 40px;
+      justify-content: center;
+      margin-bottom: 30px;
+    }
+    .btn-list a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 180px;
+      height: 80px;
+      background: #eee;
+      color: #333;
+      border-radius: 4px;
+      font-weight: bold;
+      text-align: center;
+      transition: background 0.3s;
+      padding: 0;
+    }
+    .btn-list a:hover {
+      background: #ccc;
+    }
   </style>
 
   <script>
@@ -276,6 +301,20 @@
         if(loader) loader.style.display = 'none';
         if(content) content.style.opacity = '1';
       }
+
+      // モバイル用ハンバーガーメニュー
+      const menuToggle = document.querySelector('.menu-toggle');
+      const navMenu = document.querySelector('nav ul');
+      if (menuToggle) {
+        menuToggle.addEventListener('click', () => {
+          navMenu.classList.toggle('show');
+        });
+      }
+      document.querySelectorAll('nav ul li a').forEach(link => {
+        link.addEventListener('click', () => {
+          navMenu.classList.remove('show');
+        });
+      });
     });
   </script>
 </head>
@@ -412,6 +451,15 @@
           <td>TEL : 03-1234-5678<br>Mail : info@lup.co.jp</td>
         </tr>
       </table>
+    </div>
+
+    <div class="btn-list">
+      <a href="index.html?noload=true#news">NEWS<br>お知らせ</a>
+      <a href="company.html?noload=true">COMPANY<br>会社概要</a>
+      <a href="message.html?noload=true">MESSAGE<br>メッセージ</a>
+      <a href="services.html?noload=true">SERVICES<br>事業紹介</a>
+      <a href="recruit.html?noload=true">RECRUIT<br>採用情報</a>
+      <a href="contact.html?noload=true">CONTACT<br>お問い合わせ</a>
     </div>
 
     <!-- フッター -->
