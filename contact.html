@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <!-- スムーズスクロール＆アンカーずれ対策 -->
+  <style>
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 80px; /* ヘッダーの高さ */
+    }
+  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>L‑UP | CONTACT</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Bebas Neue（ロゴ・大見出し用） -->
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+  <!-- Archivo Black -->
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap" rel="stylesheet">
+  <!-- Caveat（手書き風フォント） -->
+  <link href="https://fonts.googleapis.com/css2?family=Caveat&display=swap" rel="stylesheet">
+  <!-- Montserrat（本文用） -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  
+  <style>
+    /* 基本設定 */
+    * { box-sizing: border-box; }
+    body, html {
+      margin: 0;
+      padding: 0;
+      font-family: 'Montserrat', sans-serif;
+      background: #f9f9f9;
+      color: #333;
+    }
+    a { text-decoration: none; color: inherit; }
+    img { max-width: 100%; height: auto; }
+    
+    /* ヘッダー（統一デザイン） */
+    header {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 80px;
+      background: rgba(0,0,0,0.5);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 0 20px;
+      z-index: 999;
+    }
+    .menu-toggle {
+      display: none;
+      cursor: pointer;
+      color: #fff;
+      font-size: 30px;
+    }
+    .header-pc {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+    }
+    .header-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 40px;
+      color: #fff;
+      text-align: center;
+      margin-right: 50px;
+    }
+    nav ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: inline-flex;
+      gap: 30px;
+      align-items: center;
+    }
+    nav ul li { font-size: 16px; color: #fff; }
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .nav-eng {
+      font-weight: 700;
+      font-size: 14px;
+      color: #fff;
+    }
+    .nav-divider {
+      width: 100%;
+      border: none;
+      border-top: 1px solid #999;
+      margin: 2px 0;
+    }
+    .nav-jp {
+      font-size: 16px;
+      color: #fff;
+    }
+    
+    /* ページ上部の見出しエリア */
+    .page-hero {
+      background: #005A9C;
+      color: #fff;
+      text-align: center;
+      padding: 40px 20px 20px;
+      margin-top: 80px;
+    }
+    .page-hero h1 {
+      font-family: 'Caveat', cursive;
+      font-size: 48px;
+      margin-bottom: 10px;
+      letter-spacing: 2px;
+      position: relative;
+      top: -35px;
+    }
+    .page-hero .subtext {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.2rem;
+      letter-spacing: 1px;
+      position: relative;
+      top: -35px;
+    }
+    
+    /* CONTACT 内容エリア */
+    .contact-section {
+      max-width: 800px;
+      margin: 40px auto 60px;
+      padding: 20px;
+      background: #fff;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      border-radius: 8px;
+    }
+    .contact-section h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 32px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .contact-info {
+      font-size: 16px;
+      line-height: 1.8;
+    }
+    .contact-info p {
+      margin: 10px 0;
+    }
+    
+    /* フッター */
+    footer {
+      background: #333;
+      color: #fff;
+      text-align: center;
+      padding: 20px;
+      font-size: 14px;
+    }
+    
+    /* 下からスライドインのアニメーション */
+    .slide-up {
+      opacity: 0;
+      transform: translateY(50px);
+      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    }
+    .slide-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    /* レスポンシブ（モバイル版） */
+    @media (max-width: 768px) {
+      header {
+        justify-content: flex-start;
+        padding: 0 10px;
+      }
+      .menu-toggle {
+        display: block;
+        font-size: 36px;
+        margin-right: auto;
+      }
+      .header-pc { display: none; }
+      .header-logo {
+        position: relative;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 30px;
+      }
+      nav ul {
+        flex-direction: column;
+        background: rgba(0,0,0,0.9);
+        position: absolute;
+        top: 80px;
+        left: 0;
+        width: 100%;
+        display: none;
+        padding: 20px 0;
+      }
+      nav ul.show { display: flex; }
+      nav ul li {
+        font-size: 14px;
+        margin: 10px 0;
+      }
+      .page-hero {
+        padding: 60px 20px 40px;
+      }
+      .page-hero h1 {
+        font-size: 36px;
+      }
+      .contact-section {
+        margin: 60px 20px;
+        padding: 20px;
+      }
+    }
+
+    /* btn-list styling */
+    .btn-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 40px;
+      justify-content: center;
+      margin-bottom: 30px;
+    }
+    .btn-list a {
+      display: inline-block;
+      padding: 12px 20px;
+      background: #eee;
+      color: #333;
+      border-radius: 4px;
+      font-weight: bold;
+      text-align: center;
+      transition: background 0.3s;
+    }
+    .btn-list a:hover {
+      background: #ccc;
+    }
+    
+    :root {
+      --contact-form-top: 0px; /* Adjust this value to move Contact Form block */
+    }
+  </style>
+  
+  <script>
+    // noload=true 判定（ローディングなしの場合）
+    document.addEventListener('DOMContentLoaded', () => {
+      const params = new URLSearchParams(window.location.search);
+      const noLoad = params.get("noload") === "true";
+      if(noLoad) {
+        document.getElementById('loader').style.display = 'none';
+        document.getElementById('content').style.opacity = '1';
+      }
+    });
+    
+    // ローディングあり版
+    window.addEventListener('load', () => {
+      const params = new URLSearchParams(window.location.search);
+      const noLoad = params.get("noload") === "true";
+      if(!noLoad) {
+        const loader = document.getElementById('loader');
+        const content = document.getElementById('content');
+        setTimeout(() => {
+          loader.style.opacity = '0';
+          setTimeout(() => {
+            loader.style.display = 'none';
+            content.style.opacity = '1';
+          }, 500);
+        }, 1500);
+      }
+    });
+    
+    // ハンバーガーメニュー（モバイル用）
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navMenu = document.querySelector('nav ul');
+    if (menuToggle) {
+      menuToggle.addEventListener('click', () => {
+        navMenu.classList.toggle('show');
+      });
+    }
+    document.querySelectorAll('nav ul li a').forEach(link => {
+      link.addEventListener('click', () => {
+        navMenu.classList.remove('show');
+      });
+    });
+    
+    // IntersectionObserver で .slide-up 要素を下からスライドイン
+    document.addEventListener('DOMContentLoaded', () => {
+      const slideElems = document.querySelectorAll('.slide-up');
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      }, { threshold: 0.3 });
+      slideElems.forEach(elem => observer.observe(elem));
+    });
+  </script>
+</head>
+<body>
+  <!-- ローディング画面（noload=true 前提の場合は非表示） -->
+  <div id="loader"></div>
+  
+  <!-- メインコンテンツ -->
+  <div id="content">
+    <!-- ヘッダー -->
+    <header>
+      <div class="menu-toggle">☰</div>
+      <div class="header-pc">
+        <h1 class="header-logo">
+          <a href="index.html?noload=true" style="color:#fff;">L‑UP</a>
+        </h1>
+        <nav>
+          <ul>
+            <li>
+              <div class="nav-item">
+                <a href="index.html?noload=true#news">
+                  <span class="nav-eng">NEWS</span>
+                  <hr class="nav-divider">
+                  <span class="nav-jp">お知らせ</span>
+                </a>
+              </div>
+            </li>
+            <li>
+              <div class="nav-item">
+                <a href="message.html?noload=true">
+                  <span class="nav-eng">MESSAGE</span>
+                  <hr class="nav-divider">
+                  <span class="nav-jp">メッセージ</span>
+                </a>
+              </div>
+            </li>
+            <li>
+              <div class="nav-item">
+                <a href="company.html?noload=true">
+                  <span class="nav-eng">COMPANY</span>
+                  <hr class="nav-divider">
+                  <span class="nav-jp">会社概要</span>
+                </a>
+              </div>
+            </li>
+            <li>
+              <div class="nav-item">
+                <a href="services.html?noload=true">
+                  <span class="nav-eng">SERVICES</span>
+                  <hr class="nav-divider">
+                  <span class="nav-jp">事業紹介</span>
+                </a>
+              </div>
+            </li>
+            <li>
+              <div class="nav-item">
+                <a href="recruit.html?noload=true">
+                  <span class="nav-eng">RECRUIT</span>
+                  <hr class="nav-divider">
+                  <span class="nav-jp">採用情報</span>
+                </a>
+              </div>
+            </li>
+            <li>
+              <div class="nav-item">
+                <a href="contact.html?noload=true">
+                  <span class="nav-eng">CONTACT</span>
+                  <hr class="nav-divider">
+                  <span class="nav-jp">お問い合わせ</span>
+                </a>
+              </div>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+    
+    <!-- ページ上部のタイトルエリア -->
+    <section class="page-hero slide-up">
+      <h1>CONTACT</h1>
+      <div class="subtext">お問い合わせ</div>
+    </section>
+    
+    <!-- CONTACT 内容エリア -->
+    <div class="container slide-up">
+      <div class="contact-section">
+        <h2>CONTACT INFORMATION</h2>
+        <div class="contact-info">
+          <p><strong>住所：</strong>〒123-4567 東京都千代田区○○1-2-3 L‑UPビル 5F</p>
+          <p><strong>TEL：</strong>03-1234-5678</p>
+          <p><strong>Mail：</strong><a href="mailto:info@lup.co.jp">info@lup.co.jp</a></p>
+          <p><strong>営業時間：</strong>平日 9:00～18:00</p>
+        </div>
+      </div>
+    </div>
+    <div class="contact-section slide-up" style="margin-top: 40px;">
+      <div style="text-align: center; margin-bottom: 20px; position: relative; top: var(--contact-form-top, 0px);">
+        <h2 style="margin-bottom: 5px; position: relative; top: 20px;">Contact Form</h2>
+        <div style="display: inline-block; border-top: 1px solid #333; width: 160px; margin: 0 auto -3px;"></div>
+        <div style="font-size: 18px;">お問い合わせ</div>
+      </div>
+      <form action="mailto:info@lup.co.jp" method="post" enctype="text/plain">
+        <div style="margin-bottom: 15px;">
+          <label for="name" style="display:block; margin-bottom: 5px;">Name</label>
+          <input type="text" id="name" name="name" required style="width:100%; padding:10px; border:1px solid #ccc; border-radius:5px;">
+        </div>
+        <div style="margin-bottom: 15px;">
+          <label for="email" style="display:block; margin-bottom: 5px;">Email Address</label>
+          <input type="email" id="email" name="email" required style="width:100%; padding:10px; border:1px solid #ccc; border-radius:5px;">
+        </div>
+        <div style="margin-bottom: 15px;">
+          <label for="message" style="display:block; margin-bottom: 5px;">Message</label>
+          <textarea id="message" name="message" rows="5" required style="width:100%; padding:10px; border:1px solid #ccc; border-radius:5px;"></textarea>
+        </div>
+        <div style="text-align: center;">
+          <button type="submit" style="background:#005A9C; color:#fff; padding:10px 20px; border:none; border-radius:5px; cursor:pointer;">Send</button>
+        </div>
+      </form>
+    </div>
+    
+    <!-- 下部のボタンエリア -->
+    <div class="btn-list">
+      <a href="index.html?noload=true#news">NEWS<br>お知らせ</a>
+      <a href="company.html?noload=true">COMPANY<br>会社概要</a>
+      <a href="message.html?noload=true">MESSAGE<br>メッセージ</a>
+      <a href="services.html?noload=true">SERVICES<br>事業紹介</a>
+      <a href="recruit.html?noload=true">RECRUIT<br>採用情報</a>
+      <a href="contact.html?noload=true">CONTACT<br>お問い合わせ</a>
+    </div>
+    
+    <!-- フッター -->
+    <footer>
+      <p>&copy; 2025 L‑UP. All Rights Reserved.</p>
+    </footer>
+  </div>
+  
+  <script>
+    // noload=true 判定
+    document.addEventListener('DOMContentLoaded', () => {
+      const params = new URLSearchParams(window.location.search);
+      const noLoad = params.get("noload") === "true";
+      if(noLoad) {
+        document.getElementById('loader').style.display = 'none';
+        document.getElementById('content').style.opacity = '1';
+      }
+    });
+    
+    // ローディングあり版
+    window.addEventListener('load', () => {
+      const params = new URLSearchParams(window.location.search);
+      const noLoad = params.get("noload") === "true";
+      if(!noLoad) {
+        const loader = document.getElementById('loader');
+        const content = document.getElementById('content');
+        setTimeout(() => {
+          loader.style.opacity = '0';
+          setTimeout(() => {
+            loader.style.display = 'none';
+            content.style.opacity = '1';
+          }, 500);
+        }, 1500);
+      }
+    });
+    
+    // ハンバーガーメニュー（モバイル用）
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navMenu = document.querySelector('nav ul');
+    if (menuToggle) {
+      menuToggle.addEventListener('click', () => {
+        navMenu.classList.toggle('show');
+      });
+    }
+    document.querySelectorAll('nav ul li a').forEach(link => {
+      link.addEventListener('click', () => {
+        navMenu.classList.remove('show');
+      });
+    });
+    
+    // IntersectionObserver で .slide-up 要素を下からスライドイン
+    document.addEventListener('DOMContentLoaded', () => {
+      const slideElems = document.querySelectorAll('.slide-up');
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      }, { threshold: 0.3 });
+      slideElems.forEach(elem => observer.observe(elem));
+    });
+  </script>
+</body>
+</html>
