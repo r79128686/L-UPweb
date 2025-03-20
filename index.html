@@ -313,16 +313,33 @@
   </style>
   
   <script>
-    // ページ読み込み時に URL に noload=true があるかチェックし、あれば loader をスキップ
+    // DOMContentLoaded で noload 判定
     document.addEventListener('DOMContentLoaded', () => {
       const params = new URLSearchParams(window.location.search);
       const noLoad = params.get("noload") === "true";
       const loader = document.getElementById('loader');
       const content = document.getElementById('content');
-      
       if(noLoad) {
+        // ローディングをスキップ
         loader.style.display = 'none';
         content.style.opacity = '1';
+      }
+    });
+    
+    // ウィンドウ読み込み完了時（ローディングあり版）
+    window.addEventListener('load', () => {
+      const params = new URLSearchParams(window.location.search);
+      const noLoad = params.get("noload") === "true";
+      if(!noLoad) {
+        const loader = document.getElementById('loader');
+        const content = document.getElementById('content');
+        setTimeout(() => {
+          loader.style.opacity = '0';
+          setTimeout(() => {
+            loader.style.display = 'none';
+            content.style.opacity = '1';
+          }, 500);
+        }, 1500);
       }
     });
   </script>
@@ -342,14 +359,13 @@
       <div class="block"></div>
     </div>
   </div>
-  
+
   <!-- メインコンテンツ -->
   <div id="content">
     <!-- ヘッダー -->
     <header>
       <div class="menu-toggle">☰</div>
       <div class="header-pc">
-        <!-- ヘッダー内のロゴリンクは常に index.html?noload=true へ -->
         <h1 class="header-logo"><a href="index.html?noload=true" style="color:#fff;">L‑UP</a></h1>
         <nav>
           <ul>
@@ -411,12 +427,12 @@
         </nav>
       </div>
     </header>
-    
+
     <!-- ヒーローセクション -->
     <section class="hero" id="home">
       <h2>Are you ready to rise ?</h2>
     </section>
-    
+
     <!-- NEWS セクション -->
     <div class="container">
       <section class="news-section" id="news">
@@ -430,10 +446,10 @@
         </div>
       </section>
     </div>
-    
-    <!-- MESSAGE セクション（クリックでメッセージページへ） -->
+
+    <!-- MESSAGE セクション（クリックで独立ページ message.html へ） -->
     <div class="container">
-      <a class="section-link" href="#message">
+      <a class="section-link" href="message.html">
         <section class="section" id="message" style="background: url('message-bg.jpg') no-repeat center center / cover;">
           <div class="content">
             <h3 style="font-size:32px; margin-bottom:10px;">MESSAGE</h3>
@@ -443,10 +459,10 @@
         </section>
       </a>
     </div>
-    
-    <!-- COMPANY セクション -->
+
+    <!-- COMPANY セクション（クリックで独立ページ company.html へ） -->
     <div class="container">
-      <a class="section-link" href="#company">
+      <a class="section-link" href="company.html">
         <section class="section" id="company" style="background: url('company-bg.jpg') no-repeat center center / cover;">
           <div class="content">
             <h3 style="font-size:32px; margin-bottom:10px;">COMPANY</h3>
@@ -456,10 +472,10 @@
         </section>
       </a>
     </div>
-    
-    <!-- SERVICES セクション -->
+
+    <!-- SERVICES セクション（クリックで独立ページ services.html へ） -->
     <div class="container">
-      <a class="section-link" href="#services">
+      <a class="section-link" href="services.html">
         <section class="section" id="services" style="background: url('services-bg.jpg') no-repeat center center / cover;">
           <div class="content">
             <h3 style="font-size:32px; margin-bottom:10px;">SERVICES</h3>
@@ -469,10 +485,10 @@
         </section>
       </a>
     </div>
-    
-    <!-- RECRUIT セクション -->
+
+    <!-- RECRUIT セクション（クリックで独立ページ recruit.html へ） -->
     <div class="container">
-      <a class="section-link" href="#recruit">
+      <a class="section-link" href="recruit.html">
         <section class="section" id="recruit" style="background: url('recruit-bg.jpg') no-repeat center center / cover;">
           <div class="content">
             <h3 style="font-size:32px; margin-bottom:10px;">RECRUIT</h3>
@@ -482,10 +498,10 @@
         </section>
       </a>
     </div>
-    
-    <!-- CONTACT セクション -->
+
+    <!-- CONTACT セクション（クリックで独立ページ contact.html へ） -->
     <div class="container">
-      <a class="section-link" href="#contact">
+      <a class="section-link" href="contact.html">
         <section class="section" id="contact" style="background: url('contact-bg.jpg') no-repeat center center / cover;">
           <div class="content">
             <h3 style="font-size:32px; margin-bottom:10px;">CONTACT</h3>
@@ -495,8 +511,8 @@
         </section>
       </a>
     </div>
-    
-    <!-- 画像ギャラリー（必要に応じて削除） -->
+
+    <!-- 画像ギャラリー -->
     <div class="gallery">
       <div class="gallery-track">
         <img src="gallery1.jpg" alt="Gallery 1">
@@ -511,7 +527,7 @@
         <img src="gallery10.jpg" alt="Gallery 10">
       </div>
     </div>
-    
+
     <!-- フッター -->
     <footer>
       <p>&copy; 2025 L‑UP. All Rights Reserved.</p>
@@ -519,35 +535,6 @@
   </div>
   
   <script>
-    // クエリパラメータをチェック
-    document.addEventListener('DOMContentLoaded', () => {
-      const params = new URLSearchParams(window.location.search);
-      const noLoad = params.get("noload") === "true";
-      const loader = document.getElementById('loader');
-      const content = document.getElementById('content');
-      if(noLoad) {
-        loader.style.display = 'none';
-        content.style.opacity = '1';
-      }
-    });
-    
-    // ローディングあり版は常に loader を表示（noloadが付いていない場合）
-    window.addEventListener('load', () => {
-      const params = new URLSearchParams(window.location.search);
-      const noLoad = params.get("noload") === "true";
-      if(!noLoad) {
-        const loader = document.getElementById('loader');
-        const content = document.getElementById('content');
-        setTimeout(() => {
-          loader.style.opacity = '0';
-          setTimeout(() => {
-            loader.style.display = 'none';
-            content.style.opacity = '1';
-          }, 500);
-        }, 1500);
-      }
-    });
-    
     // ハンバーガーメニュー（モバイル用）
     const menuToggle = document.querySelector('.menu-toggle');
     const navMenu = document.querySelector('nav ul');

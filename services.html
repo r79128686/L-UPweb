@@ -10,11 +10,11 @@
     }
   </style>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>L‑UP | MESSAGE</title>
+  <title>L‑UP | SERVICES</title>
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <!-- Bebas Neue（大見出し用） -->
+  <!-- Bebas Neue（ロゴ・大見出し用） -->
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
   <!-- Archivo Black -->
   <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap" rel="stylesheet">
@@ -35,18 +35,20 @@
     }
     a { text-decoration: none; color: inherit; }
     img { max-width: 100%; height: auto; }
-
-    /* ヘッダー（メインHPと同じ） */
+    
+    /* ローディング画面（必要に応じて） */
+    
+    /* ヘッダー（共通デザイン） */
     header {
       position: fixed;
-      top: 0; left: 0;
+      top: 0;
+      left: 0;
       width: 100%;
       height: 80px;
       background: rgba(0,0,0,0.5);
       display: flex;
-      flex-direction: column;
       align-items: center;
-      justify-content: center;
+      justify-content: space-between;
       padding: 0 20px;
       z-index: 999;
     }
@@ -71,90 +73,97 @@
     }
     nav ul {
       list-style: none;
-      margin: 0; padding: 0;
+      margin: 0;
+      padding: 0;
       display: inline-flex;
       gap: 30px;
       align-items: center;
     }
     nav ul li {
-      font-size: 16px; color: #fff;
+      font-size: 16px;
+      color: #fff;
     }
     .nav-item {
-      display: flex; flex-direction: column; align-items: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
     .nav-eng {
-      font-weight: 700; font-size: 14px; color: #fff;
+      font-weight: 700;
+      font-size: 14px;
+      color: #fff;
     }
     .nav-divider {
-      width: 100%; border: none; border-top: 1px solid #999; margin: 2px 0;
+      width: 100%;
+      border: none;
+      border-top: 1px solid #999;
+      margin: 2px 0;
     }
     .nav-jp {
-      font-size: 16px; color: #fff;
+      font-size: 16px;
+      color: #fff;
     }
-
-    /* 上部見出しブロック */
+    
+    /* ページ上部の見出しエリア */
     .page-hero {
       background: #005A9C; /* 青い背景 */
       color: #fff;
       text-align: center;
-      padding: 10px 20px 10px;
+      padding: 10px 20px 20px;
       margin-top: 80px;
     }
     .page-hero h1 {
-      font-family: 'Caveat', cursive; /* 手書き風 */
+      font-family: 'Caveat', cursive;
       font-size: 48px;
       margin-bottom: 10px;
       letter-spacing: 2px;
-      position: relative;
-      top: -5px;  /* 見出しを5px上に */
+      /* 必要ならここで見出しの位置を調整 */
     }
     .page-hero .subtext {
       font-family: 'Montserrat', sans-serif;
       font-size: 1.2rem;
       letter-spacing: 1px;
-      position: relative;
-      top: -5px;  /* サブテキストも5px上に */
     }
-
-    /* 青い背景エリア */
+    
+    /* 青い背景エリア（ヒーローエリア） */
     .hero-blue {
       position: relative;
       background: #005A9C;
-      padding-bottom: 80px;
+      height: 250px;
+      padding: 0;
       text-align: center;
       z-index: 1;
+      overflow: hidden;
     }
-
     .hero-image {
       position: relative;
       width: 100%;
       height: 500px;
-      background-image: url('message-hero.jpg');
+      background-image: url('services-hero.jpg');
       background-size: cover;
       background-position: center top;
       z-index: 0;
     }
+    
+    :root {
+      --hero-text-top: 0px;
+      --hero-text-left: 0%;
+      --hero-text-width: 100%;
+      --hero-text-padding: 40px;
+    }
 
-    /* 画像 */
-    /* .hero-image {
-      position: absolute;
-      top: -50px;
-      left: 0;
-      width: 100%;
-      height: auto;
-      object-fit: cover;
-    } */
-    /* 文章ブロック（左詰め、トップはそのまま） */
     .hero-text {
       position: absolute;
-      top: 0%;
-      left: 0%;
-      width: 50%;
-      background-color: transparent;
-      padding: 40px 40px 30px 40px;
+      top: var(--hero-text-top);
+      left: var(--hero-text-left);
+      width: var(--hero-text-width);
+      background-color: rgba(0, 0, 0, 0.5);
       border-radius: 10px;
-      text-align: left;
+      padding: var(--hero-text-padding);
+      text-align: center; /* Center-align text */
+      z-index: 1;
     }
+    
     .hero-text h2,
     .hero-text p {
       margin: 0;
@@ -171,17 +180,8 @@
       line-height: 1.8;
       margin-bottom: 20px;
     }
-    /* 代表者名 */
-    .hero-signature {
-      margin-top: 85px;
-      display: block;
-      font-size: 14px;
-      font-weight: bold;
-      color: #fff;
-      text-align: left;
-    }
-
-    /* コンテナ・ブロック */
+    
+    /* コンテナ・コンテンツブロック */
     .container {
       max-width: 1200px;
       margin: 0 auto;
@@ -191,8 +191,7 @@
       display: flex;
       flex-wrap: wrap;
       align-items: center;
-      margin-top: 40px;
-      margin-bottom: 60px;
+      margin: 40px 0 60px;
     }
     .block-image {
       flex: 1 1 400px;
@@ -203,6 +202,9 @@
     .block-text {
       flex: 1 1 400px;
       max-width: 600px;
+      background-color: rgba(0, 0, 0, 0.5);
+      border-radius: 10px;
+      padding: 20px;
     }
     .block-text h2 {
       font-size: 24px;
@@ -213,7 +215,39 @@
       line-height: 1.8;
       margin-bottom: 20px;
     }
-
+    
+    /* 下部のボタンエリア */
+    .btn-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 40px;
+      justify-content: center;
+      margin-bottom: 30px;
+    }
+    .btn-list a {
+      display: inline-block;
+      padding: 12px 20px;
+      background: #eee;
+      color: #333;
+      border-radius: 4px;
+      font-weight: bold;
+      text-align: center;
+      transition: background 0.3s;
+    }
+    .btn-list a:hover {
+      background: #ccc;
+    }
+    
+    /* フッター */
+    footer {
+      background: #333;
+      color: #fff;
+      text-align: center;
+      padding: 20px;
+      font-size: 14px;
+    }
+    
     /* 下からスライドインのアニメーション */
     .slide-up {
       opacity: 0;
@@ -224,40 +258,8 @@
       opacity: 1;
       transform: translateY(0);
     }
-
-    /* 下部の6つのボタン */
-    .btn-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 40px;
-      justify-content: center;
-    }
-    .btn-list a {
-      display: inline-block;
-      padding: 12px 20px; 
-      background: #eee;
-      color: #333;
-      border-radius: 4px;
-      font-weight: bold;
-      text-align: center;
-      transition: background 0.3s;
-      margin-top: 80px; /* ここで上部の外側の余白を20pxに設定 */
-    }
-    .btn-list a:hover {
-      background: #ccc;
-    }
-
-    /* フッター */
-    footer {
-      background: #333;
-      color: #fff;
-      text-align: center;
-      padding: 20px;
-      font-size: 14px;
-    }
-
-    /* レスポンシブ */
+    
+    /* レスポンシブ（モバイル版） */
     @media (max-width: 768px) {
       header {
         justify-content: flex-start;
@@ -265,12 +267,12 @@
       }
       .menu-toggle {
         display: block;
-        font-size: 30px;
+        font-size: 36px;
         margin-right: auto;
       }
       .header-pc { display: none; }
       .header-logo {
-        position: absolute;
+        position: relative;
         left: 50%;
         transform: translateX(-50%);
         font-size: 30px;
@@ -291,74 +293,94 @@
         margin: 10px 0;
       }
       .page-hero {
-        margin-top: 80px;
         padding: 60px 20px 40px;
       }
       .page-hero h1 {
         font-size: 36px;
-        margin-top: -5px;
-        transform: translateY(-5px);
+        top: -5px;
       }
-      .hero-blue {
-        min-height: 450px;
-        margin-bottom: 40px;
+      .hero-image {
+        height: 300px;
+      }
+      
+      :root {
+        --hero-text-top-mobile: 30px;
+        --hero-text-left-mobile: 5%;
+        --hero-text-width-mobile: 90%;
+        --hero-text-padding-mobile: 20px;
       }
       .hero-text {
-        top: 15%;
-        left: 10%;
-        width: 40%;
+        top: var(--hero-text-top-mobile);
+        left: var(--hero-text-left-mobile);
+        width: var(--hero-text-width-mobile);
+        padding: var(--hero-text-padding-mobile);
+        text-align: center; /* Ensure center alignment on mobile */
       }
+      
       .hero-text h2 {
         font-size: 32px;
       }
       .hero-text p {
         font-size: 14px;
       }
-      .hero-signature {
-        bottom: 20px;
-        left: 10%;
-        font-size: 12px;
-      }
       .container {
         margin: 100px 20px 40px;
       }
       .section-block {
         flex-direction: column;
-        margin-top: 20px;
-        margin-bottom: 40px;
+        margin: 20px 0 40px;
       }
       .block-image, .block-text {
         max-width: 100%;
         margin-right: 0;
       }
     }
-
   </style>
   
   <script>
-    // メッセージページは noload=true 前提
+    
+    
+    // ハンバーガーメニュー（モバイル用）
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navMenu = document.querySelector('nav ul');
+    if (menuToggle) {
+      menuToggle.addEventListener('click', () => {
+        navMenu.classList.toggle('show');
+      });
+    }
+    document.querySelectorAll('nav ul li a').forEach(link => {
+      link.addEventListener('click', () => {
+        navMenu.classList.remove('show');
+      });
+    });
+    
+    // IntersectionObserver で .slide-up 要素を下からスライドイン
     document.addEventListener('DOMContentLoaded', () => {
-      const params = new URLSearchParams(window.location.search);
-      const noLoad = params.get("noload") === "true";
-      if(noLoad) {
-        const loader = document.getElementById('loader');
-        const content = document.getElementById('content');
-        if(loader) loader.style.display = 'none';
-        if(content) content.style.opacity = '1';
-      }
+      const slideElems = document.querySelectorAll('.slide-up');
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      }, { threshold: 0.3 });
+      slideElems.forEach(elem => observer.observe(elem));
     });
   </script>
 </head>
 <body>
-  <!-- ローディング画面（非表示） -->
-  <div id="loader" style="display:none;"></div>
-
+  <!-- ローディング画面 -->
+  
+  
+  <!-- メインコンテンツ -->
   <div id="content" style="opacity:1;">
     <!-- ヘッダー -->
     <header>
       <div class="menu-toggle">☰</div>
       <div class="header-pc">
-        <h1 class="header-logo"><a href="index.html?noload=true" style="color:#fff;">L‑UP</a></h1>
+        <h1 class="header-logo">
+          <a href="index.html?noload=true" style="color:#fff;">L‑UP</a>
+        </h1>
         <nav>
           <ul>
             <li>
@@ -419,83 +441,108 @@
         </nav>
       </div>
     </header>
-
-    <!-- 上部見出しブロック -->
+    
+    <!-- ページ上部のタイトルエリア -->
     <section class="page-hero slide-up">
-      <h1>MESSAGE</h1>
-      <div class="subtext">メッセージ</div>
+      <h1>SERVICES</h1>
+      <div class="subtext">事業内容</div>
     </section>
-
-    <!-- 青い背景ゾーン -->
+    
+    <!-- 青い背景ゾーン（サービスのヒーローエリア） -->
     <section class="hero-blue slide-up">
       <div class="hero-image"></div>
       <div class="hero-text">
-        <h2>私たちは「未来」を創るセールスプロモーション会社</h2>
+        <h2>革新的なソリューションで未来を創造する</h2>
         <p>
-          L‑UPの仕事をひと言で語るなら、「クライアント企業様が抱える課題を起点としたセールスプロモーション施策の立案と実行」です。<br>
-          その先にある「より良い社会」「より良い価値」を共に創っていくため、最先端の手法と社員の主体性を最大限に活かし、クライアント様と二人三脚で歩み続けています。
+          私たちは、デジタルマーケティング、ブランディング、セールスプロモーションなど、幅広い事業領域でお客様の課題解決に取り組んでいます。<br>
+          最新の技術と豊富な知見で、持続可能な成長と新たな価値の創造を目指します。
         </p>
-        <p>
-          そして、そのプロセスで得た知見を還元し、新たな価値を創造し続けることが、私たちの使命です。<br>
-          今後もクライアント様の課題に真摯に向き合い、社会に新たな「気づき」と「可能性」を生み出す存在であり続けます。
-        </p>
-        <div class="hero-signature">株式会社L‑UP　代表取締役　宮崎　恋</div>
       </div>
     </section>
-
-    <!-- 2つ目のブロック -->
-    <div class="container">
-      <div class="section-block slide-up">
+    
+    <!-- サービス詳細ブロック（スライドイン） -->
+    <div class="container slide-up">
+      <div class="section-block">
         <div class="block-image">
-          <img src="message-block2.jpg" alt="情熱イメージ">
+          <img src="service1.jpg" alt="デジタルマーケティング">
         </div>
         <div class="block-text">
-          <h2>『情熱』は『才能』に勝る</h2>
+          <h2>デジタルマーケティング</h2>
           <p>
-            L‑UPの企業理念は、クライアント企業様とエンドユーザー、そして当社の三者間で「喜びの連鎖」を生み出す「火付け役」になることです。<br>
-            私たちはその火付け役を「AGITATOR（アジテーター）」と呼び、情熱で困難に立ち向かいます。
-          </p>
-          <p>
-            自らが火付け役となり、挑戦することで力を生み出す―それがL‑UPの信念です。
+            最新のデジタル戦略とツールを活用し、企業のオンラインプレゼンスと販売促進を実現します。
           </p>
         </div>
       </div>
-
-      <!-- 3つ目のブロック -->
-      <div class="section-block slide-up">
+      
+      <div class="section-block">
         <div class="block-image">
-          <img src="message-block3.jpg" alt="未来イメージ">
+          <img src="service2.jpg" alt="ブランディング">
         </div>
         <div class="block-text">
-          <h2>「なりたい姿」が描ければ、必ず実現する</h2>
+          <h2>ブランディング</h2>
           <p>
-            L‑UPは社員一人ひとりの「やりたい」「なりたい」を大切にしています。<br>
-            どんなに高い目標でも、「なりたい姿」が明確であれば、そこに向かって確実に歩むことができるのです。
-          </p>
-          <p>
-            その歩みを全力でサポートすることが、私たちの使命。共に未来を切り拓くため、挑戦し続けます。
+            ブランド価値を最大化するための戦略的アプローチで、企業の信頼性と魅力を高めます。
           </p>
         </div>
       </div>
-
-      <!-- 下部の6つのボタン -->
-      <div class="btn-list">
-        <a href="company.html?noload=true">COMPANY<br>会社概要</a>
-        <a href="message.html?noload=true">MESSAGE<br>メッセージ</a>
-        <a href="services.html?noload=true">SERVICES<br>事業紹介</a>
-        <a href="recruit.html?noload=true">RECRUIT<br>採用情報</a>
-        <a href="index.html?noload=true#news">NEWS<br>お知らせ</a>
-        <a href="contact.html?noload=true">CONTACT<br>お問い合わせ</a>
+      
+      <div class="section-block">
+        <div class="block-image">
+          <img src="service3.jpg" alt="セールスプロモーション">
+        </div>
+        <div class="block-text">
+          <h2>セールスプロモーション</h2>
+          <p>
+            効果的なプロモーション施策で、販売促進と市場拡大を強力にサポートします。
+          </p>
+        </div>
       </div>
     </div>
-
+    
+    <!-- 下部のボタンエリア（リンク） -->
+    <div class="btn-list">
+      <a href="company.html?noload=true">COMPANY<br>会社概要</a>
+      <a href="message.html?noload=true">MESSAGE<br>メッセージ</a>
+      <a href="services.html?noload=true">SERVICES<br>事業内容</a>
+      <a href="recruit.html?noload=true">RECRUIT<br>採用情報</a>
+      <a href="index.html?noload=true#news">NEWS<br>お知らせ</a>
+      <a href="contact.html?noload=true">CONTACT<br>お問い合わせ</a>
+    </div>
+    
     <!-- フッター -->
     <footer>
       <p>&copy; 2025 L‑UP. All Rights Reserved.</p>
     </footer>
   </div>
-
+  
   <script>
+    // noload=true 判定
+    document.addEventListener('DOMContentLoaded', () => {
+      const params = new URLSearchParams(window.location.search);
+      const noLoad = params.get("noload") === "true";
+      if(noLoad) {
+        document.getElementById('loader').style.display = 'none';
+        document.getElementById('content').style.opacity = '1';
+      }
+    });
+    
+    // ローディングあり版
+    window.addEventListener('load', () => {
+      const params = new URLSearchParams(window.location.search);
+      const noLoad = params.get("noload") === "true";
+      if(!noLoad) {
+        const loader = document.getElementById('loader');
+        const content = document.getElementById('content');
+        setTimeout(() => {
+          loader.style.opacity = '0';
+          setTimeout(() => {
+            loader.style.display = 'none';
+            content.style.opacity = '1';
+          }, 500);
+        }, 1500);
+      }
+    });
+    
     // ハンバーガーメニュー（モバイル用）
     const menuToggle = document.querySelector('.menu-toggle');
     const navMenu = document.querySelector('nav ul');
@@ -509,7 +556,7 @@
         navMenu.classList.remove('show');
       });
     });
-
+    
     // IntersectionObserver で .slide-up 要素を下からスライドイン
     document.addEventListener('DOMContentLoaded', () => {
       const slideElems = document.querySelectorAll('.slide-up');

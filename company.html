@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <!-- スムーズスクロール＆アンカーずれ対策 -->
+  <style>
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 80px; /* ヘッダーの高さ */
+    }
+  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>L‑UP | COMPANY</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Bebas Neue（大見出し用） -->
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+  <!-- Archivo Black（ローディング用など） -->
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap" rel="stylesheet">
+  <!-- Caveat（手書き風フォント） -->
+  <link href="https://fonts.googleapis.com/css2?family=Caveat&display=swap" rel="stylesheet">
+  <!-- Montserrat（本文用） -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* 基本設定 */
+    * { box-sizing: border-box; }
+    body, html {
+      margin: 0;
+      padding: 0;
+      font-family: 'Montserrat', sans-serif;
+      background: #f9f9f9;
+      color: #333;
+    }
+    a { text-decoration: none; color: inherit; }
+    img { max-width: 100%; height: auto; }
+
+    /* 下からスライドインのアニメーション */
+    .slide-up {
+      opacity: 0;
+      transform: translateY(50px);
+      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    }
+    .slide-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ヘッダー（メインHPのデザインをコピー） */
+    header {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 80px;
+      background: rgba(0,0,0,0.5);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 0 20px;
+      z-index: 999;
+    }
+    .menu-toggle {
+      display: none;
+      cursor: pointer;
+      color: #fff;
+      font-size: 30px;
+    }
+    .header-pc {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+    }
+    /* ロゴリンクは必ず index.html?noload=true */
+    .header-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 40px;
+      color: #fff;
+      text-align: center;
+      margin-right: 50px;
+    }
+    nav ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: inline-flex;
+      gap: 30px;
+      align-items: center;
+    }
+    nav ul li { font-size: 16px; color: #fff; }
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .nav-eng {
+      font-weight: 700;
+      font-size: 14px;
+      color: #fff;
+    }
+    .nav-divider {
+      width: 100%;
+      border: none;
+      border-top: 1px solid #999;
+      margin: 2px 0;
+    }
+    .nav-jp {
+      font-size: 16px;
+      color: #fff;
+    }
+
+    /* ページ上部のタイトルエリア */
+    .page-hero {
+      background: #005A9C; /* お好みの背景色 */
+      color: #fff;
+      text-align: center;
+      padding: 100px 20px 60px;
+      margin-top: 80px; /* ヘッダー分の余白 */
+    }
+    /* COMPANYを大きく手書き風に */
+    .page-hero h1 {
+      font-family: 'Caveat', cursive;
+      font-size: 48px;
+      margin-bottom: 10px;
+      letter-spacing: 2px;
+      position: relative;
+      top: -40px;
+    }
+    .page-hero .subtext {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.2rem;
+      letter-spacing: 1px;
+      position: relative;
+      top: -40px;
+    }
+
+    /* 3つのボタンエリア */
+    .info-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 40px;
+      background: #eee;
+      padding: 50px 0;
+      margin-bottom: 60px;
+    }
+    .info-button {
+      display: inline-block;
+      width: 280px;
+      text-align: center;
+      background: #fff;
+      border-radius: 4px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      padding: 30px;
+      transition: box-shadow 0.3s;
+    }
+    .info-button:hover {
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    }
+    .info-button h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 24px;
+      margin-bottom: 12px;
+    }
+    .info-button p {
+      font-size: 14px;
+      color: #555;
+    }
+
+    /* COMPANY PROFILE テーブル */
+    .profile-section {
+      max-width: 1000px;
+      margin: 0 auto 60px;
+      padding: 20px;
+      background: #fff;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .profile-section h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 24px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .profile-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .profile-table th, .profile-table td {
+      border-bottom: 1px solid #ccc;
+      padding: 12px;
+      text-align: left;
+      font-size: 14px;
+    }
+    .profile-table th {
+      width: 30%;
+      background: #f3f3f3;
+      font-weight: 700;
+    }
+    .profile-table td {
+      width: 70%;
+    }
+
+    /* フッター */
+    footer {
+      background: #333;
+      color: #fff;
+      text-align: center;
+      padding: 20px;
+      font-size: 14px;
+    }
+
+    /* レスポンシブ */
+    @media (max-width: 768px) {
+      header {
+        justify-content: flex-start;
+        padding: 0 10px;
+      }
+      .menu-toggle {
+        display: block;
+        font-size: 30px;
+        margin-right: auto;
+      }
+      .header-pc { display: none; }
+      .header-logo {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 30px;
+      }
+      nav ul {
+        flex-direction: column;
+        background: rgba(0,0,0,0.9);
+        position: absolute;
+        top: 80px;
+        left: 0;
+        width: 100%;
+        display: none;
+        padding: 20px 0;
+      }
+      nav ul.show { display: flex; }
+      nav ul li {
+        font-size: 14px;
+        margin: 10px 0;
+      }
+      .page-hero {
+        padding: 60px 20px 40px;
+        margin-top: 80px;
+      }
+      .page-hero h1 {
+        font-size: 36px;
+      }
+      .info-button {
+        width: 80%;
+        max-width: 300px;
+      }
+      .profile-section {
+        margin-bottom: 40px;
+      }
+      .profile-table th, .profile-table td {
+        font-size: 13px;
+        padding: 8px;
+      }
+    }
+  </style>
+
+  <script>
+    // このページはローディングなし版（noload=true 前提）
+    document.addEventListener('DOMContentLoaded', () => {
+      const params = new URLSearchParams(window.location.search);
+      const noLoad = params.get("noload") === "true";
+      if(noLoad) {
+        const loader = document.getElementById('loader');
+        const content = document.getElementById('content');
+        if(loader) loader.style.display = 'none';
+        if(content) content.style.opacity = '1';
+      }
+    });
+  </script>
+</head>
+<body>
+  <!-- ローディング要素は非表示 -->
+  <div id="loader" style="display:none;"></div>
+
+  <div id="content" style="opacity:1;">
+    <!-- ヘッダー（メインHPのヘッダーをコピー） -->
+    <header>
+      <div class="menu-toggle">☰</div>
+      <div class="header-pc">
+        <!-- ロゴリンクは常にローディングなし版 -->
+        <h1 class="header-logo">
+          <a href="index.html?noload=true" style="color:#fff;">L‑UP</a>
+        </h1>
+        <nav>
+          <ul>
+            <li>
+              <div class="nav-item">
+                <a href="index.html?noload=true#news">
+                  <span class="nav-eng">NEWS</span>
+                  <hr class="nav-divider">
+                  <span class="nav-jp">お知らせ</span>
+                </a>
+              </div>
+            </li>
+            <li>
+              <div class="nav-item">
+                <a href="message.html?noload=true">
+                  <span class="nav-eng">MESSAGE</span>
+                  <hr class="nav-divider">
+                  <span class="nav-jp">メッセージ</span>
+                </a>
+              </div>
+            </li>
+            <li>
+              <div class="nav-item">
+                <a href="company.html?noload=true">
+                  <span class="nav-eng">COMPANY</span>
+                  <hr class="nav-divider">
+                  <span class="nav-jp">会社概要</span>
+                </a>
+              </div>
+            </li>
+            <li>
+              <div class="nav-item">
+                <a href="services.html?noload=true">
+                  <span class="nav-eng">SERVICES</span>
+                  <hr class="nav-divider">
+                  <span class="nav-jp">事業紹介</span>
+                </a>
+              </div>
+            </li>
+            <li>
+              <div class="nav-item">
+                <a href="recruit.html?noload=true">
+                  <span class="nav-eng">RECRUIT</span>
+                  <hr class="nav-divider">
+                  <span class="nav-jp">採用情報</span>
+                </a>
+              </div>
+            </li>
+            <li>
+              <div class="nav-item">
+                <a href="contact.html?noload=true">
+                  <span class="nav-eng">CONTACT</span>
+                  <hr class="nav-divider">
+                  <span class="nav-jp">お問い合わせ</span>
+                </a>
+              </div>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <!-- ページ上部のタイトルエリア -->
+    <section class="page-hero slide-up">
+      <h1>COMPANY</h1>
+      <div class="subtext">会社概要</div>
+    </section>
+
+    <!-- 3つのボタンエリア -->
+    <div class="info-buttons slide-up">
+      <div class="info-button">
+        <h2>COMPANY PROFILE</h2>
+        <p>会社概要を詳しく見る</p>
+      </div>
+      <div class="info-button">
+        <h2>INFOGRAPHICS</h2>
+        <p>数字で見るL‑UP</p>
+      </div>
+      <div class="info-button">
+        <h2>SERVICE</h2>
+        <p>事業内容一覧</p>
+      </div>
+    </div>
+
+    <!-- COMPANY PROFILE セクション -->
+    <div class="profile-section slide-up">
+      <h2>COMPANY PROFILE</h2>
+      <table class="profile-table">
+        <tr>
+          <th>会社名</th>
+          <td>L‑UP株式会社</td>
+        </tr>
+        <tr>
+          <th>設立年月日</th>
+          <td>2023年4月1日</td>
+        </tr>
+        <tr>
+          <th>従業員数</th>
+          <td>50名</td>
+        </tr>
+        <tr>
+          <th>所在地</th>
+          <td>
+            〒123‑4567 東京都千代田区○○1‑2‑3<br>
+            L‑UPビル 5F
+          </td>
+        </tr>
+        <tr>
+          <th>事業内容</th>
+          <td>
+            ・デジタルマーケティング事業<br>
+            ・ブランディングコンサルティング事業<br>
+            ・セールスプロモーション事業<br>
+            ・その他関連事業
+          </td>
+        </tr>
+        <tr>
+          <th>連絡先</th>
+          <td>TEL : 03-1234-5678<br>Mail : info@lup.co.jp</td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- フッター -->
+    <footer>
+      <p>&copy; 2025 L‑UP. All Rights Reserved.</p>
+    </footer>
+  </div>
+
+  <script>
+    // モバイル用ハンバーガーメニュー
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navMenu = document.querySelector('nav ul');
+    if (menuToggle) {
+      menuToggle.addEventListener('click', () => {
+        navMenu.classList.toggle('show');
+      });
+    }
+    document.querySelectorAll('nav ul li a').forEach(link => {
+      link.addEventListener('click', () => {
+        navMenu.classList.remove('show');
+      });
+    });
+
+    // IntersectionObserver で .slide-up 要素を下からスライドイン
+    document.addEventListener('DOMContentLoaded', () => {
+      const slideElems = document.querySelectorAll('.slide-up');
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      }, { threshold: 0.3 });
+      slideElems.forEach(elem => observer.observe(elem));
+    });
+  </script>
+</body>
+</html>
